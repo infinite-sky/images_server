@@ -1,0 +1,52 @@
+{
+  "126": {
+    "host": "imap.126.com",
+    "port": 143,
+    "tls": false
+  },
+  "163": {
+    "host": "imap.163.com",
+    "port": 993,
+    "tls": true
+  },
+  "2980": {
+    "host": "imap.2980.com",
+    "port": 143,
+    "tls": false
+  },
+  "gmail": {
+    "host": "imap.gmail.com",
+    "port": 993,
+    "tls": true
+  },
+  "qq": {
+    "host": "imap.qq.com",
+    "port": 993,
+    "tls": true
+  },
+  "yeah": {
+    "host": "imap.yeah.net",
+    "port": 143,
+    "tls": false
+  },
+  "sina": {
+    "host": "imap.sina.com",
+    "port": 143,
+    "tls": false
+  },
+  "sohu": {
+    "host": "mail.sohu.com",
+    "port": 143,
+    "tls": false
+  },
+  "aliyun": {
+    "host": "imap.mxhichina.com",
+    "port": 993,
+    "tls": true
+  },
+  "21cn": {
+    "host": "imap-ent.21cn.com",
+    "port": 993,
+    "tls": true
+  }
+}

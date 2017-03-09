@@ -1,13 +1,14 @@
 'use strict';
+const path = require('path');
 const config = require('config');
 const fs = require('fs-extra');
 const express = require('express');
 const compression = require('compression');
+const bodyParser = require('body-parser');
 const vhost = require('vhost');
 
-const connectLogger = require('./middlewares/connect-logger');
-const finallyResp = require('./middlewares/finally-resp');
 const logger = require('./tools/logger');
+const finallyResp = require('./middlewares/final-response');
 const createRouter = require('./routes');
 
 fs.mkdirsSync(config.fileDir);
@@ -17,7 +18,10 @@ fs.mkdirsSync(config.formidableConf.uploadDir);
 
 const app = express();
 
-app.use(connectLogger(logger, config.format));
+// app.set('views', path.join(__dirname, 'views'));
+app.use(express.static(path.join(__dirname, 'views')));
+
+// app.use(connectLogger());
 app.use(bodyParser.json({limit:'80mb'}));
 app.use(bodyParser.urlencoded({extened:false, limit:'80mb'}));
 app.use(compression({
@@ -37,11 +41,12 @@ routeVhosts(config.vhostInfos)(app);
 
 function routeVhosts(vhostInfos){
     return function(hostApp){
-        for(let vhostInfo of routeVhosts){
+        for(let vhostInfo of vhostInfos){
+            
             logger.info('-------------------------------------------');
             logger.info(`hostname:${vhostInfo.hostname}`);
             logger.info(`dir:${vhostInfo.dir}`);
-            
+
             hostApp.use(vhost(vhostInfo.hostname, createRouter(vhostInfo)));
             if(Array.isArray(vhostInfo.servers)){
                 for(let server of vhostInfo.servers){
@@ -61,11 +66,8 @@ function routeVhosts(vhostInfos){
     }
 }
 
-app.use(finallyResp({
-    format:'JSON',
-    encoding:'utf8',
-    view:{}
-}));
+app.use(finallyResp({}));
+
 app.listen(config.port, () =>{
     logger.info(`image service start, listen on port:${config.port}`);
 });

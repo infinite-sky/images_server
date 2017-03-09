@@ -1,0 +1,19 @@
+[
+    {
+        "hostname":"127.0.0.1",
+        "host":"127.0.0.1:8088",
+        "dir":"127.0.0.1",
+        "statics":{
+            "dir":"/raid/imgserver.com",
+            "maxAge":3600
+        },
+        "servers":[
+            {
+                "hostname":"127.0.0.1"
+            },
+            {
+                "hostname":"www.jianshu.com"
+            }
+        ]
+    }
+]
