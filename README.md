@@ -1,2 +1,2 @@
 # images_server
-a image server
+This a image server(upload,store,process,download)
