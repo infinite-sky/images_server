@@ -4,20 +4,18 @@
     <title>测试上传</title>
 </head>
 
-<h3>http://127.0.0.1:8088/images</h3>
+<h3>http://23.244.192.146:8088/images</h3>
 <form action="/images" method="POST" enctype="multipart/form-data">
     <table>
         <tr>
             <td><input type="file" name="images1"/></td>
-            <td><input type="file" name="images2"/></td>
-            <td><input type="text" name="imagesInputName" value="images1,images2" hidden/></td>
+            <td><input type="text" name="imagesInputName" value="images1" hidden/></td>
             <td><input type="submit" value="上传"/></td>
         </tr>
     </table>
 </form>
 
-<h3>http://127.0.0.1:8088/images/base64</h3>
-<form action="http://127.0.0.1:8088/images/base64" method="POST" enctype="multipart/form-data">
+<form action="http://127.0.0.1:8088/images/base64" method="POST" enctype="multipart/form-data" hidden>
     <table>
         <tr>
             <td><input type="file" name="images/images1" value="data:image/png;base64,xxxxxxxxx"/></td>

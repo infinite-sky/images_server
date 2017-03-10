@@ -15,6 +15,9 @@ if(config.mongodb && config.mongodb.url){
         return image.findOne({host:vhostInfo.host, hash:file.hash});
     };
 
+//    image.create = function(imageInfo){
+//        return image.insert(imageInfo);
+//    };
     exports.Image = image;
 }else{
    exports.Image = {

@@ -48,12 +48,14 @@ function routeVhosts(vhostInfos){
             logger.info(`dir:${vhostInfo.dir}`);
 
             hostApp.use(vhost(vhostInfo.hostname, createRouter(vhostInfo)));
-            if(Array.isArray(vhostInfo.servers)){
-                for(let server of vhostInfo.servers){
-                    logger.info(`allow hostname: ${server.hostname}`);
-                    hostApp.use(vhost(server.hostname, createRouter(vhostInfo)));
-                }
-            }
+//            if(Array.isArray(vhostInfo.servers)){
+//               for(let server of vhostInfo.servers){
+//                    logger.info(`allow hostname: ${server.hostname}`);
+//                    hostApp.use(vhost(server.hostname, createRouter(vhostInfo)));
+//                }
+//            }
+
+            hostApp.use(createRouter(vhostInfo))
 
             if(vhostInfo.statics){
                 hostApp.use(vhost(vhostInfo.hostname, express.static(vhostInfo.statics.dir, {

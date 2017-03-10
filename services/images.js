@@ -19,7 +19,6 @@ Promise.promisifyAll(fs);
 let hashFileAsync = Promise.promisifyAll(hasha.fromFile);
 
 function saveAsFile(file, rootDir){
-    console.log('saveAsFile, ====================================');
     let pathName = file.path;
     let ext = path.extname(pathName).toLowerCase();
     let fileName = path.basename(pathName, ext).replace(/^upload_/, '');
@@ -68,6 +67,7 @@ exports.handleFormImage = function(headers, vhostInfo, fields, files, fileDir){
 
         return saveImageToDB(headers, vhostInfo, fileDir, file, date).then((imageInfo) =>{
             imageInfos.push(_.pick(imageInfo, imageFieldsPick));
+            console.log('imageInfos', imageInfos);
         });
     }).return({imageInfos})
 };
@@ -77,7 +77,6 @@ function saveImageToDB(headers, vhostInfo, fileDir, file, date, options){
     options = options || {};
     return models.Image.getImgInfoAsync(vhostInfo, file).then((result) =>{
         date = date || new Date();
-
         let imageInfo = {
             name:file.name,
             hash:file.hash,
@@ -87,7 +86,6 @@ function saveImageToDB(headers, vhostInfo, fileDir, file, date, options){
             root:fileDir,
             date:date
         };
-
         if(result){
             imageInfo.url = result.url;
             imageInfo.format = result.fromat;
@@ -99,7 +97,10 @@ function saveImageToDB(headers, vhostInfo, fileDir, file, date, options){
                 delete file.size;
                 return gm(file.path).autoOrient().writeAsync(file.path).then(() => saveAs());
             }
-            return saveAs().tap((image) => models.Image.create(image));
+//            return saveAs().tap((image) => models.Image.create(image));
+           return saveAs().tap((image) =>{
+                return models.Image.create(image);
+            });
         }
 
         function saveAs(){
@@ -111,7 +112,7 @@ function saveImageToDB(headers, vhostInfo, fileDir, file, date, options){
                     imageInfo.mime = file.mime;
                     imageInfo.url = `http://${vhostInfo.host}${config.upload.imgUrlPath}${saveAsFile(file, fileDir)}`;
                     return Promise.resolve(imageInfo);
-                });
+                }).catch((err) =>{console.log(err, 'err')});
             });
         }
     });

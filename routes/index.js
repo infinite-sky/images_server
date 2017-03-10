@@ -19,7 +19,6 @@ const base64image = middlewares.base64image;
 
 module.exports = function createRouter(vhostInfo){
     let vhostRouter = express.Router().use(attachVhostInfo(vhostInfo));
-
     vhostRouter.post('/images', formParser.parse(config.formidableConf), uploadImageCtrl.uploadImgFile);
     // vhostRouter.post('/images/base64', base64image.parse(config.upload), uploadImageCtrl.uploadBase64String);
 
